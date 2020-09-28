@@ -12,3 +12,6 @@ RUN mkdir /usr/box/
 RUN cd /usr/box/ && git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello
 RUN cd /usr/box/boxfuse-sample-java-war-hello && mvn package
 RUN cp /usr/box/boxfuse-sample-java-war-hello/target/hello-1.0.war /usr/tomcat/webapps
+#Execute tomcat
+CMD ["/usr/tomcat/bin/catalina.sh","run"]
+EXPOSE 8080
