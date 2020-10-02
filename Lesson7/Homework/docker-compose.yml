@@ -1,0 +1,16 @@
+version: '2'
+services:
+  assemble:
+    build: ./assemble/
+    image: assemble
+    volumes:
+      - ./target:/usr/box/boxfuse-sample-java-war-hello/target/
+    
+  web:
+    image: tomcat:8.5-jre8-alpine
+    volumes:
+      - ./target:/usr/local/tomcat/webapps/
+    ports: 
+      - "8080:8080"
+    depends_on:
+      - assemble     
