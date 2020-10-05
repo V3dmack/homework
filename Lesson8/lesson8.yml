@@ -1,0 +1,51 @@
+---
+    - name: build project
+      hosts: test2
+      become: yes
+    
+      tasks:
+    
+        - name: Install the maven to the assembly environment
+          apt:
+            name: maven
+            state: latest
+            update_cache: yes
+    
+        - name: Clone the repository to the assembly environment
+          git:
+            repo: https://github.com/boxfuse/boxfuse-sample-java-war-hello
+            dest: /usr/box
+    
+        - name: Make project
+          shell: cd /usr/box/ && mvn package
+    
+    - name: Prepare production
+      hosts: test3
+      become: yes
+    
+      tasks:
+    
+        - name: Install the tomcat to the production environment
+          apt:
+            name: tomcat9
+            state: latest
+            update_cache: yes
+    
+        - name: Start tomcat on production environment
+          service:
+            name: tomcat9
+            enabled: yes
+            state: started
+    
+    - name: Copy project
+      hosts: test3
+      become: yes
+    
+      tasks:
+    
+        - name: Copy project to prod
+          synchronize:
+            src: /usr/box/target/hello-1.0.war
+            dest: /var/lib/tomcat9/webapps/hello.war
+          delegate_to: test2
+          run_once: true    
