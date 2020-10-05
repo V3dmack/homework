@@ -13,7 +13,7 @@
       
       - name: Change config
         lineinfile:
-        path: /usr/share/nginx/index.html
+        path: /var/www/html/index.html
         regexp: '^<h1>Welcome to nginx!</h1>'
         line: '<p><script> document.write(new Date().toLocaleDateString()); </script></p>'
         
