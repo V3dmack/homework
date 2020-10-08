@@ -48,4 +48,4 @@
             src: /usr/box/target/hello-1.0.war
             dest: /var/lib/tomcat9/webapps/hello.war
           delegate_to: test2
-          run_once: true    
+          run_once: true 
